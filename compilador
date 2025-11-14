@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mesclar PDFs (cliente)</title>
+
+  <!-- PDF-LIB: biblioteca para manipular PDFs no navegador -->
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#f7faf7; color:#042; padding:18px; }
+    .container { max-width:900px; margin:18px auto; background:white; border-radius:8px; box-shadow:0 6px 18px rgba(2,6,23,0.08); padding:20px; }
+    h1 { margin:0 0 8px; font-size:20px; color:#064e3b; }
+    p.lead { margin:0 0 16px; color:#234; }
+    .controls { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+    input[type=file] { padding:6px; }
+    button { background:#065f46; color:white; border:0; padding:8px 12px; border-radius:6px; cursor:pointer; }
+    button:disabled { opacity:0.5; cursor:not-allowed; }
+    .list { margin-top:12px; border:1px dashed #cde; padding:10px; border-radius:6px; background:#fbfffb; }
+    .item { display:flex; gap:10px; align-items:center; padding:8px; border-radius:6px; background:white; margin-bottom:8px; box-shadow:0 1px 4px rgba(2,6,23,0.04); }
+    .item:last-child { margin-bottom:0; }
+    .fname { flex:1; font-size:14px; color:#033; word-break:break-all; }
+    .small { font-size:12px; color:#456; }
+    .btns { display:flex; gap:6px; }
+    .btn-ghost { background:transparent; color:#065f46; border:1px solid #cfeee3; padding:6px 8px; border-radius:6px; }
+    .progress { margin-top:10px; height:10px; background:#eef7ef; border-radius:999px; overflow:hidden; }
+    .progress > span { display:block; height:100%; width:0%; background:#34d399; transition:width .25s ease; }
+    footer { margin-top:14px; font-size:13px; color:#234; }
+    .note { font-size:12px; color:#666; margin-top:8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Mesclar PDFs (rodando no navegador)</h1>
+    <p class="lead">Selecione arquivos PDF, ajuste a ordem (setas) e clique em <strong>Juntar PDFs</strong> para gerar um único arquivo.</p>
+
+    <div class="controls">
+      <input id="fileInput" type="file" accept="application/pdf" multiple />
+      <button id="btnMerge" disabled>Juntar PDFs</button>
+      <button id="btnClear" class="btn-ghost">Limpar lista</button>
+      <div style="margin-left:auto;" class="small">Arquivos selecionados: <span id="count">0</span></div>
+    </div>
+
+    <div id="list" class="list" aria-live="polite">
+      <!-- itens aparecerão aqui -->
+      <div id="empty" class="small">Nenhum arquivo selecionado.</div>
+    </div>
+
+    <div class="progress" aria-hidden="true" style="display:none;">
+      <span id="progressBar" style="width:0%"></span>
+    </div>
+
+    <div id="result" style="margin-top:12px;"></div>
+
+    <footer>
+      <div class="note">Observação: todo o processamento é feito no seu navegador — nada é enviado a servidores externos.</div>
+    </footer>
+  </div
